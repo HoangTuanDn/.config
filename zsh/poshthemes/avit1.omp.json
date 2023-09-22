@@ -1,0 +1,87 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "foreground": "#ffffff",
+          "properties": {
+            "style": "full"
+          },
+          "style": "plain",
+          "template": "{{ .Path }} ",
+          "type": "path"
+        },
+        {
+          "foreground": "#C2C206",
+          "style": "plain",
+          "template": "{{ .HEAD }} ",
+          "type": "git"
+        },
+        {
+          "foreground": "#B5B50D",
+          "style": "plain",
+          "template": " \uf0e7 ",
+          "type": "root"
+        },
+        {
+          "foreground": "#C94A16",
+          "style": "plain",
+          "template": "x{{ .Meaning }} ",
+          "type": "exit"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "right",
+      "segments": [
+        {
+          "foreground": "white",
+          "properties": {
+            "always_enabled": true,
+            "style": "round"
+          },
+          "style": "plain",
+          "template": " {{ .FormattedMs }} ",
+          "type": "executiontime"
+        },
+        {
+          "foreground": "green",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}red{{ end }}"
+          ],
+          "properties": {
+            "always_enabled": true
+          },
+          "style": "plain",
+          "template": " {{ if gt .Code 0 }}\u2a2f{{else}}\u2713{{ end }} ",
+          "type": "exit"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "foreground": "#cd5e42",
+          "style": "plain",
+          "template": "\ue3bf ",
+          "type": "root"
+        },
+        {
+          "foreground": "#CD4277",
+          "style": "plain",
+          "template": "\u25b6",
+          "type": "text"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "final_space": true,
+  "version": 2
+}
