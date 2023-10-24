@@ -379,6 +379,8 @@ set -g prefix2 None
 # move status line to top
 #set -g status-position top
 
+# custom bind fzf-sheets
+bind-key i run-shell "tmux neww /usr/local/bin/chtfzf.sh -t"
 
 # -- tpm -----------------------------------------------------------------------
 
@@ -420,6 +422,7 @@ tmux_conf_uninstall_plugins_on_reload=true
 #set -g @plugin 'tmux-plugins/tmux-resurrect'
 #set -g @plugin 'tmux-plugins/tmux-continuum'
 #set -g @continuum-restore 'on'
+set -g @plugin 'sainnhe/tmux-fzf'
 
 
 # -- custom variables ----------------------------------------------------------
