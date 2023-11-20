@@ -68,25 +68,24 @@ tmux_conf_24b_colour=auto
 tmux_conf_theme=enabled
 
 # default theme
-tmux_conf_theme_colour_1="#080808"    # dark gray
-tmux_conf_theme_colour_2="#303030"    # gray
-tmux_conf_theme_colour_3="#8a8a8a"    # light gray
-tmux_conf_theme_colour_4="#00afff"    # light blue
-tmux_conf_theme_colour_5="#ffff00"    # yellow
-tmux_conf_theme_colour_6="#080808"    # dark gray
-tmux_conf_theme_colour_7="#e4e4e4"    # white
-tmux_conf_theme_colour_8="#080808"    # dark gray
-tmux_conf_theme_colour_9="#ffff00"    # yellow
-tmux_conf_theme_colour_10="#ff00af"   # pink
-tmux_conf_theme_colour_11="#5fff00"   # green
-tmux_conf_theme_colour_12="#8a8a8a"   # light gray
-tmux_conf_theme_colour_13="#e4e4e4"   # white
-tmux_conf_theme_colour_14="#080808"   # dark gray
-tmux_conf_theme_colour_15="#080808"   # dark gray
-tmux_conf_theme_colour_16="#d70000"   # red
-tmux_conf_theme_colour_17="#e4e4e4"   # white
-tmux_conf_theme_colour_18="#626262"   # custom
-tmux_conf_theme_colour_19="#262626"   # custom
+tmux_conf_theme_colour_1="#24283b" 
+tmux_conf_theme_colour_2="#3c466e" 
+tmux_conf_theme_colour_3="#bb9af7" 
+tmux_conf_theme_colour_4="#7aa2f7" 
+tmux_conf_theme_colour_5="#e0af68" 
+tmux_conf_theme_colour_6="#24283b" 
+tmux_conf_theme_colour_7="#b4f9f8" 
+tmux_conf_theme_colour_8="#24283b" 
+tmux_conf_theme_colour_9="#e0af68" 
+tmux_conf_theme_colour_10="#565f89"
+tmux_conf_theme_colour_11="#9ece6a"
+tmux_conf_theme_colour_12="#8a8a8a"
+tmux_conf_theme_colour_13="#24283b"
+tmux_conf_theme_colour_14="#24283b"
+tmux_conf_theme_colour_15="#2f334b"
+tmux_conf_theme_colour_16="#a9b1d6"
+tmux_conf_theme_colour_17="#668fda"
+tmux_conf_theme_colour_18="#3f435a"
 
 # default theme (ansi)
 #tmux_conf_theme_colour_1="colour0"
@@ -152,7 +151,7 @@ tmux_conf_theme_mode_attr="bold"
 
 # status line style
 tmux_conf_theme_status_fg="$tmux_conf_theme_colour_18"
-tmux_conf_theme_status_bg="$tmux_conf_theme_colour_19"
+tmux_conf_theme_status_bg="$tmux_conf_theme_colour_1"
 tmux_conf_theme_status_attr="none"
 
 # terminal title
@@ -262,7 +261,7 @@ tmux_conf_theme_status_left_bg="$tmux_conf_theme_colour_9,$tmux_conf_theme_colou
 tmux_conf_theme_status_left_attr="bold,none,none"
 
 # status right style
-tmux_conf_theme_status_right_fg="$tmux_conf_theme_colour_12,$tmux_conf_theme_colour_13,$tmux_conf_theme_colour_14"
+tmux_conf_theme_status_right_fg="$tmux_conf_theme_colour_3,$tmux_conf_theme_colour_13,$tmux_conf_theme_colour_14"
 tmux_conf_theme_status_right_bg="$tmux_conf_theme_colour_15,$tmux_conf_theme_colour_16,$tmux_conf_theme_colour_17"
 tmux_conf_theme_status_right_attr="none,none,bold"
 
@@ -312,7 +311,7 @@ tmux_conf_battery_bar_length="auto"
 #   - heat
 #   - "colour_full_fg,colour_empty_fg,colour_bg"
 tmux_conf_battery_bar_palette="gradient"
-#tmux_conf_battery_bar_palette="#d70000,#e4e4e4,#000000"   # red, white, black
+#tmux_conf_battery_bar_palette="#d70000,#b4f9f8,#000000"   # red, white, black
 
 # battery hbar palette, possible values are:
 #   - gradient (default)
