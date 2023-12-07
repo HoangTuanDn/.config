@@ -1,11 +1,6 @@
 " F5 to toggle 
 map <silent> <F5> :NERDTreeToggle<CR>
 
-" NERDTree key map
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
 
 " Open the existing NERDTree on each new tab.
 "autocmd BufWinEnter * silent NERDTreeMirror
@@ -52,8 +47,6 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
 
 " Ignore some type of files: 
 let NERDTreeIgnore=['__pycache__', 'site-packages']
-
-" Function to open the file or NERDTree or netrw.
 "   Returns: 1 if either file explorer was opened; otherwise, 0.
 function! s:OpenFileOrExplorer(...)
     if a:0 == 0 || a:1 == ''

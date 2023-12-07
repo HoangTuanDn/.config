@@ -3,19 +3,20 @@
 " | | | | '_ \
 " | |_| | | | |
 " |____/|_| |_|
-" Vim customized by Dn
 
-set idearefactormode=keep
-set showmode
+" =================================================
+" Plugin 
 set ideajoin
 set surround
 set easymotion
 set highlightedyank
 set NERDTree
 
-" ==========================================
-set number                        " line numbers
-
+" =================================================
+" Common set "
+set idearefactormode=keep
+set showmode
+set number relativenumber         " line numbers
 set hlsearch                      " highlight search occurrences
 set ignorecase                    " ignore case in search patterns
 set smartcase                     " no ignore case when pattern is uppercase
@@ -24,34 +25,25 @@ set wrapscan                      " searches wrap around the end of the file
 
 set gdefault                      " substitute all occurrences in line per default
 set history=10000                 " keep x lines of command line history
-set scrolloff=5 sidescrolloff=10  " keep some lines before and after the cursor visible
+set clipboard=unnamedplus,unnamed,ideaput " integrate with system clipboard
 
 " set <leader> to <space>
 let mapleader = " "
 " =============================================
-
+" map
 noremap <Esc> <nop>
-nmap <S-Enter> O<Esc>
-nmap <CR> o<Esc>
+nmap <S-Enter> o<Esc>
+"nmap <CR> o<Esc>
+nmap <leader>v :vsp<CR>
+nmap <leader>s :sp<CR>
 
 " don't lose selection when indenting
 vnoremap < <gv
 vnoremap > >gv
 vnoremap = =gv
 
-inoremap <C-f> :action Find<CR>
-
-" system clipboard
-" changed from "+ to "* in version 2.5.0
-vmap <leader>y "*y
-vmap <leader>d "*d
-nmap <leader>y "*yy
-nmap <leader>p
-
-"*p
-map <leader>P "*P
-vmap <leader>p "*p
-vmap <leader>P "*P
+" use find
+inoremap <C-f> <Action>(Find)
 
 " scrolling
 nmap <leader>d <C-d>
@@ -59,16 +51,23 @@ nmap <leader>u <C-u>
 vmap <leader>d <C-d>
 vmap <leader>u <C-u>
 
-" actions
-nmap <leader>h <action>(PreviousTab)
-nmap <leader>l <action>(NextTab)
+" Tab navigation
+map <Tab> <Action>(NextTab)
+map <S-Tab> <Action>(PreviousTab)
+
+" Navigate project errors
+map [e <Action>(GotoPreviousError)
+map ]e <Action>(GotoNextError)
+nmap <leader>e <action>(ShowErrorDescription)
+
+" Bye bye
+map <leader>q <Action>(CloseContent)
+map <leader>Q <Action>(CloseAllEditors)
+map <leader>h <Action>(HideAllWindows)
 nmap <leader>bd <action>(CloseEditor)
-nmap <leader>i <action>(Generate)
-nmap <leader>m <action>(Git.Menu)
-nmap <leader>s <action>(QuickChangeScheme)
-nmap <leader>/ <action>(ShowErrorDescription)
-nmap <leader>e <action>(GotoNextError)
-nnoremap <leader><leader> <C-Tab>
+
+" menu content
+nmap <leader>m <Action>(ShowPopupMenu)
 
 " Move selected lines and keep selection on these lines
 vnoremap J :action MoveLineDown<CR>

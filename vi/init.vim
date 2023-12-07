@@ -65,6 +65,7 @@ nmap <M-Up> :resize -1<CR>
 " Search a hightlighted text
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 nmap /\ :noh<CR>
+nmap <S-Enter> O<Esc>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin list
@@ -128,6 +129,10 @@ call plug#begin(stdpath('config').'/plugged')
 
 " Fold 
   Plug 'tmhedberg/SimpylFold'
+
+" moving
+  Plug 'easymotion/vim-easymotion'
+
 call plug#end()
 
 
