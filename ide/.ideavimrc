@@ -16,7 +16,7 @@ set NERDTree
 " Common set "
 set idearefactormode=keep
 set showmode
-set number relativenumber         " line numbers
+set number                        " line numbers
 set hlsearch                      " highlight search occurrences
 set ignorecase                    " ignore case in search patterns
 set smartcase                     " no ignore case when pattern is uppercase
@@ -31,9 +31,9 @@ set clipboard=unnamedplus,unnamed,ideaput " integrate with system clipboard
 let mapleader = " "
 " =============================================
 " map
-noremap <Esc> <nop>
+" noremap <Esc> <nop>
 nmap <S-Enter> o<Esc>
-"nmap <CR> o<Esc>
+" nmap <CR> o<Esc>
 nmap <leader>v :vsp<CR>
 nmap <leader>s :sp<CR>
 
@@ -43,37 +43,52 @@ vnoremap > >gv
 vnoremap = =gv
 
 " use find
-inoremap <C-f> <Action>(Find)
+inoremap <C-f> :action Find<CR>
 
 " scrolling
-nmap <leader>d <C-d>
-nmap <leader>u <C-u>
-vmap <leader>d <C-d>
-vmap <leader>u <C-u>
+" nmap <leader>d <C-d>
+" nmap <leader>u <C-u>
+" vmap <leader>d <C-d>
+" vmap <leader>u <C-u>
 
 " Tab navigation
-map <Tab> <Action>(NextTab)
-map <S-Tab> <Action>(PreviousTab)
+map <Tab> :action NextTab<CR>
+map <S-Tab> :action PreviousTab<CR>
 
 " Navigate project errors
-map [e <Action>(GotoPreviousError)
-map ]e <Action>(GotoNextError)
-nmap <leader>e <action>(ShowErrorDescription)
+map [e :action GotoPreviousError<CR>
+map ]e :action GotoNextError<CR>
+nmap <leader>e :action ShowErrorDescription<CR>
 
 " Bye bye
-map <leader>q <Action>(CloseContent)
-map <leader>Q <Action>(CloseAllEditors)
-map <leader>h <Action>(HideAllWindows)
-nmap <leader>bd <action>(CloseEditor)
+map <leader>q :action CloseContent<CR>
+map <leader>Q :action CloseAllEditors<CR>
+map <leader>h :action HideAllWindows<CR>
+nmap <leader>bd :action CloseEditor<CR>
 
 " menu content
-nmap <leader>m <Action>(ShowPopupMenu)
+nmap <leader>m :action ShowPopupMenu<CR>
 
 " Move selected lines and keep selection on these lines
 vnoremap J :action MoveLineDown<CR>
 vnoremap K :action MoveLineUp<CR>
 inoremap <C-j> <Esc>:m +1<CR>gi
 inoremap <C-k> <Esc>:m -2<CR>gi
+
+" system clipboard
+" nnoremap <leader>yy "+yy
+" vnoremap <leader>y "+y
+
+" nnoremap <leader>p "+p
+" vnoremap <leader>p "+p
+" nnoremap <leader>P "+P
+" vnoremap <leader>P "+P
+
+" delete not save buffer
+nnoremap <leader>x "_x
+vnoremap <leader>x "_x
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
 
 " NERDTree
 let g:NERDTreeMapActivateNode='l'

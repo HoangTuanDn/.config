@@ -68,11 +68,11 @@ tmux_conf_24b_colour=auto
 tmux_conf_theme=enabled
 
 # default theme
-tmux_conf_theme_colour_1="#24283b" 
-tmux_conf_theme_colour_2="#3c466e" 
-tmux_conf_theme_colour_3="#bb9af7" 
+tmux_conf_theme_colour_1="#282A36" 
+tmux_conf_theme_colour_2="#304080" 
+tmux_conf_theme_colour_3="#9B6BDF" 
 tmux_conf_theme_colour_4="#7aa2f7" 
-tmux_conf_theme_colour_5="#e0af68" 
+tmux_conf_theme_colour_5="#EFA554" 
 tmux_conf_theme_colour_6="#24283b" 
 tmux_conf_theme_colour_7="#b4f9f8" 
 tmux_conf_theme_colour_8="#24283b" 
@@ -253,7 +253,7 @@ tmux_conf_theme_right_separator_sub='\uE0B3'  #   PowerlineSymbols.otf font, see
 #     - #{username}
 #     - #{username_ssh}
 tmux_conf_theme_status_left="  #{username}#{root}@#{hostname} |  #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} "
-tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized}#{?battery_status,#{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} |  %R |  %d %b "
+tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized} | #{?battery_status,#{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} |  %R |  %d %b "
 
 # status left style
 tmux_conf_theme_status_left_fg="$tmux_conf_theme_colour_6,$tmux_conf_theme_colour_7,$tmux_conf_theme_colour_8"
@@ -261,9 +261,9 @@ tmux_conf_theme_status_left_bg="$tmux_conf_theme_colour_9,$tmux_conf_theme_colou
 tmux_conf_theme_status_left_attr="bold,none,none"
 
 # status right style
-tmux_conf_theme_status_right_fg="$tmux_conf_theme_colour_3,$tmux_conf_theme_colour_13,$tmux_conf_theme_colour_14"
-tmux_conf_theme_status_right_bg="$tmux_conf_theme_colour_15,$tmux_conf_theme_colour_16,$tmux_conf_theme_colour_17"
-tmux_conf_theme_status_right_attr="none,none,bold"
+tmux_conf_theme_status_right_fg="$tmux_conf_theme_colour_1,$tmux_conf_theme_colour_3,$tmux_conf_theme_colour_13,$tmux_conf_theme_colour_14"
+tmux_conf_theme_status_right_bg="$tmux_conf_theme_colour_1,$tmux_conf_theme_colour_15,$tmux_conf_theme_colour_16,$tmux_conf_theme_colour_17"
+tmux_conf_theme_status_right_attr="none,none,bold,bold"
 
 # pairing indicator
 tmux_conf_theme_pairing="⚇"                 # U+2687
@@ -290,7 +290,7 @@ tmux_conf_theme_root_bg="none"
 tmux_conf_theme_root_attr="bold,blink"
 
 # synchronized indicator
-tmux_conf_theme_synchronized="⚏"            # U+128257
+tmux_conf_theme_synchronized="🔁"            # U+128257
 tmux_conf_theme_synchronized_fg="none"
 tmux_conf_theme_synchronized_bg="none"
 tmux_conf_theme_synchronized_attr="none"
@@ -379,7 +379,24 @@ set -g prefix2 None
 #set -g status-position top
 
 # custom bind fzf-sheets
-bind-key i run-shell "tmux neww /usr/local/bin/chtfzf.sh -t"
+#bind-key i run-shell "tmux neww /usr/local/bin/chtfzf.sh -t"
+bind-key i display-popup -w 80% -h 60% -E "/usr/local/bin/chtfzf.sh"
+
+# open new popup 
+#bind-key o display-popup -w 80% -h 60% -E "/usr/bin/zsh"
+
+bind-key -n M-1 run-shell -b "\
+    if test 1 -eq #{==:#{session_name},popup} ; then \
+        tmux detach-client; \
+    else \
+        tmux popup -d \"#{pane_current_path}\" -xC -yC -w80% -h65% -E \"tmux attach -t popup || tmux new -s popup\"; \
+    fi\
+"
+
+set-hook -g after-new-session      'if "test 1 -eq #{==:#{session_name},popup}" "set status off"'
+
+# set synchronize panes
+bind-key -n M-2 set synchronize-panes
 
 # -- tpm -----------------------------------------------------------------------
 
