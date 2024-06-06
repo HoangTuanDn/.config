@@ -1,5 +1,6 @@
 //https://github.com/vinceliuice/WhiteSur-gtk-theme.git
 install.sh -l -c Dark -c Light -s 280 --right -N mojave -HD  --nord -t purple -t blue -t red -a all
+./install.sh -l -c Dark -c Light -s 280 --right -N mojave -HD  --nord -t blue -a all --round
 ./tweaks.sh -f alt
 sudo ./tweaks.sh -g -N -b /usr/share/backgrounds/canvas_by_roytanck.jpg
 

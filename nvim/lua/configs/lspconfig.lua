@@ -12,6 +12,7 @@ local servers = {
    "jsonls",
    "dockerls",
    "docker_compose_language_service",
+   "nginx_language_server",
    "tailwindcss",
    "textlsp",
    "jdtls",

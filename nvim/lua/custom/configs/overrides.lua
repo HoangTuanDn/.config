@@ -45,8 +45,22 @@ M.mason = {
     -- sql stuff
     "sqlls",
 
-    --text file stuff
+    -- text file stuff
     "grammarly-languageserver",
+
+    -- php stuff
+    -- "intelephense"
+
+    -- json
+    "json-lsp",
+
+    -- yaml
+    "yaml-language-server",
+
+    -- dev
+    "docker-compose-language-service",
+    "dockerfile-language-server",
+    "nginx-language-server",
   },
 }
 
