@@ -14,6 +14,8 @@ M.treesitter = {
     "markdown_inline",
     "rust",
     "sql",
+    "bash",
+    
   },
   indent = {
     enable = true,
@@ -61,6 +63,7 @@ M.mason = {
     "docker-compose-language-service",
     "dockerfile-language-server",
     "nginx-language-server",
+    "bash-language-server",
   },
 }
 

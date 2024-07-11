@@ -17,7 +17,8 @@ local servers = {
    "textlsp",
    "jdtls",
    "yamlls",
-   "rust_analyzer"
+   "rust_analyzer",
+   "bashls",
   }
 
 -- lsps with default config
