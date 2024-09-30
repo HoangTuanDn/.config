@@ -1,0 +1,6 @@
+/* ~/.config/gtk-3.0/gtk.css */
+
+vte-terminal {
+  padding: 5px 5px 5px 5px;
+  -vteterminal-inner-border: 5px 5px 5px 5px;
+}

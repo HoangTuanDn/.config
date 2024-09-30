@@ -24,3 +24,7 @@ map("n", "gpi", "<cmd>lua require('goto-preview').goto_preview_implementation()<
 map("n", "gpD", "<cmd>lua require('goto-preview').goto_preview_declaration()<CR>", {noremap=true})
 map("n", "gpr", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", {noremap=true})
 map("n", "gP", "<cmd>lua require('goto-preview').close_all_win()<CR>", {noremap=true})
+
+-- 
+map("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<CR>", {noremap=true})
+
