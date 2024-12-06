@@ -1,7 +1,14 @@
 //https://github.com/vinceliuice/WhiteSur-gtk-theme.git
 install.sh -l -c Dark -c Light -s 280 --right -N mojave -HD  --nord -t purple -t blue -t red -a all
 ./install.sh -l -c Dark -c Light -s 280 --right -N mojave -HD  --nord -t blue -a all --round
+./install.sh -l -m --round -c Dark -s nord --right -N mojave -HD -t blue
+
+fix nord theme border (change code)
++ src/sass/_colors.scss ($wm_outline: if($variant=='light', $wm_outline_light, $wm_outline_light);)
+
+
 ./tweaks.sh -f alt
+./install.sh -l -c Dark -s nord --right -N mojave -HD -t blue
 sudo ./tweaks.sh -g -N -b /usr/share/backgrounds/canvas_by_roytanck.jpg
 
 
