@@ -11,31 +11,52 @@ set surround
 set easymotion
 set highlightedyank
 set NERDTree
-
+"set quickscope
+set peekaboo
 " =================================================
 " Common set "
-set idearefactormode=keep
-set showmode
+set showcmd
+set guicursor
 set number                        " line numbers
 set hlsearch                      " highlight search occurrences
-set ignorecase                    " ignore case in search patterns
+set ignorecase                    " ignore case in search pattejns
 set smartcase                     " no ignore case when pattern is uppercase
 set incsearch                     " show search results while typing
 set wrapscan                      " searches wrap around the end of the file
-
 set gdefault                      " substitute all occurrences in line per default
 set history=10000                 " keep x lines of command line history
 set clipboard=unnamedplus,unnamed,ideaput " integrate with system clipboard
+set idearefactormode=normal
+set ideastatusicon=gray
+set visualbell
+set timeoutlen=1000
 
 " set <leader> to <space>
-let mapleader = " "
+" leader
+map <space> <nop>
+let mapleader="\<space>"
+
 " =============================================
-" map
 " noremap <Esc> <nop>
-nmap <S-Enter> o<Esc>
-" nmap <CR> o<Esc>
-nmap <leader>v :vsp<CR>
-nmap <leader>s :sp<CR>
+nmap <S-Enter> O<Esc>
+nmap <C-Enter> o<Esc>
+nmap <leader>v :vsp
+nmap <leader>s :sp
+noremap <Esc> :noh<CR>
+
+"window navigation
+nmap <leader>j <C-w>j
+nmap <leader>k <C-w>k
+nmap <leader>h <C-w>h
+nmap <leader>l <C-w>l
+
+"insert mode navigation
+inoremap <C-a> <Esc>^i
+inoremap <C-e> <Esc>$a
+inoremap <C-l> <Right>
+inoremap <C-h> <Left>
+"inoremap <C-k> <Up>
+"inoremap <C-j> <Down>
 
 " don't lose selection when indenting
 vnoremap < <gv
@@ -55,19 +76,46 @@ inoremap <C-f> :action Find<CR>
 map <Tab> :action NextTab<CR>
 map <S-Tab> :action PreviousTab<CR>
 
+" Tab suggestion
+inoremap <Tab> :action SelectNextCompletionOption<CR>
+inoremap <S-Tab> :action SelectPreviousCompletionOption<CR>
+
 " Navigate project errors
+map [d :action GotoPreviousError<CR>
+map ]d :action GotoNextError<CR>
 map [e :action GotoPreviousError<CR>
 map ]e :action GotoNextError<CR>
-nmap <leader>e :action ShowErrorDescription<CR>
+nmap <leader>ce :action ShowErrorDescription<CR>
 
 " Bye bye
 map <leader>q :action CloseContent<CR>
+nmap <leader>w :action SaveAll<CR>
 map <leader>Q :action CloseAllEditors<CR>
-map <leader>h :action HideAllWindows<CR>
+map <leader>H :action HideAllWindows<CR>
 nmap <leader>bd :action CloseEditor<CR>
 
 " menu content
 nmap <leader>m :action ShowPopupMenu<CR>
+nmap <leader>ca :action ShowIntentionActions<CR>
+nmap <leader>e :action ActivateProjectToolWindow<CR>
+
+" terminal
+nmap <leader>tt :action ActivateTerminalToolWindow<CR>
+nmap <leader>tc :action Terminal.OpenInTerminal<CR>
+
+" file
+nmap <leader>of :action OpenFile<CR>
+nmap <leader>ypa :action CopyAbsolutePath<CR>
+nmap <leader>ypr :action CopyContentRootPath<CR>
+nmap <leader>rf :action RecentFiles<CR>
+nmap <leader>rl :action RecentLocations<CR>
+nmap <leader>rp :action ManageRecentProjects<CR>
+nmap <leader>sh :action LocalHistory.ShowHistory<CR>
+nmap <leader>sf :action ShowFilePath<CR>
+nmap <leader>si :action SelectIn<CR>
+nmap <leader>fp :action FindInPath<CR>
+" nmap <leader>rp :action ReplaceInPath<CR>
+nmap <leader>sw :action $SearchWeb<CR>
 
 " Move selected lines and keep selection on these lines
 vnoremap J :action MoveLineDown<CR>
@@ -80,9 +128,7 @@ inoremap <C-k> <Esc>:m -2<CR>gi
 " vnoremap <leader>y "+y
 
 " nnoremap <leader>p "+p
-" vnoremap <leader>p "+p
 " nnoremap <leader>P "+P
-" vnoremap <leader>P "+P
 
 " delete not save buffer
 nnoremap <leader>x "_x
@@ -90,12 +136,46 @@ vnoremap <leader>x "_x
 nnoremap <leader>d "_d
 vnoremap <leader>d "_d
 
+" use jk in insert mode instead for ESC
+inoremap jk <Esc>
+
+" LSP
+nmap gp :action QuickImplementations<CR>
+nmap gd :action GotoDeclaration<CR>
+nmap gi :action GotoImplementation<CR>
+nmap gD :action GotoTypeDeclaration<CR>
+nmap gr :action ShowUsages<CR>
+nmap gf :action FileStructurePopup<CR>
+nmap K :action QuickJavaDoc<CR>
+nmap gq :action QuickJavaDoc<CR>
+nmap gh :action ShowIntentionActions<CR>
+nmap <leader>gf :action GotoFile<CR>
+
+" refactor
+nmap <leader>rn :action RenameElement<CR>
+nmap <leader>re :action Refactorings.QuickListPopupAction<CR>
+nmap <leader>oi :action OptimizeImports<CR>
+nmap <leader>fc :action ReformatCode<CR>
+
+" line number
+nmap <leader>n :set nu!<CR>
+nmap <leader>nr :set rnu!<CR>
+
+" collapse
+nmap zc :action ExpandCollapseToggleAction<CR>
+nmap za :action CollapseAllRegions<CR>
+nmap zA :action ExpandAllRegions<CR>
+
 " NERDTree
 let g:NERDTreeMapActivateNode='l'
 let g:NERDTreeMapJumpParent='h'
 
+" visual search
+"vnoremap * y/\V<C-R>=substitute(escape(@@,"/\\"),"\n","\\\\n","ge")<CR><CR>
+"vnoremap # y?\V<C-R>=substitute(escape(@@,"?\\"),"\n","\\\\n","ge")<CR><CR>
+vnoremap * y/<C-R>"<CR>
+
 " highlightedyank
 let g:highlightedyank_highlight_duration = "500"
 let g:highlightedyank_highlight_color = "rgba(160, 160, 160, 155)"
-
-
+let g:highlightedyank_highlight_foreground_color = "rgba(0, 0, 0, 255)"

@@ -180,7 +180,16 @@ export LESSOPEN="| bat --color always --style plain %s"
 
 #------------set up fzf--------#
 # morhetz/gruvbox
-export FZF_DEFAULT_OPTS='--tmux center --color=bg+:#3c3836,bg:#32302f,spinner:#fb4934,hl:#928374,fg:#ebdbb2,header:#928374,info:#8ec07c,pointer:#fb4934,marker:#fb4934,fg+:#ebdbb2,prompt:#fb4934,hl+:#fb4934'
+export FZF_DEFAULT_OPTS="
+  --tmux center
+  --color='fg:#616161 fg+:#616161
+  bg:#ffffff bg+:#e9e9e9 alt-bg:#f1f1f1
+  hl:#719872 hl+:#719899
+  pointer:#e12672 marker:#e17899
+  header:#719872
+  spinner:#719899 info:#727100
+  prompt:#0099bd query:#616161
+  border:#e1e1e1'"
 
 # Preview file content using bat (https://github.com/sharkdp/bat)
 export FZF_CTRL_T_OPTS="
@@ -202,9 +211,21 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
 # Options to fzf command
 export FZF_COMPLETION_OPTS='--border --info=inline'
 
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/doc/fzf/examples/completion.zsh
+#source /usr/share/doc/fzf/examples/key-bindings.zsh
+#source /usr/share/doc/fzf/examples/completion.zsh
+source <(fzf --zsh)
 
 #-------manual add neovim---------#
 export PATH="$PATH:/opt/nvim/bin"
+
+#-------manual add laravel---------#
+#export PATH="$PATH:/home/tuannh/.config/composer/vendor/bin"
+
+#-------manual add chtfzf---------#
+chtfzf() {/usr/local/bin/chtfzf.sh}
+zle -N chtfzf
+bindkey "^O" chtfzf
+
+#-----
+export COREPACK_ENABLE_AUTO_PIN=0
 
