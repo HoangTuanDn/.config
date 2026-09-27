@@ -1,0 +1,19 @@
+<!--
+  Shared JetBrains keymap for IdeaVim (built for 2026.2 IDEs on GNOME).
+  Completion popup: Tab / Shift+Tab = next / previous item, Enter = accept.
+  - Tab is removed from "Choose Lookup Item Replace"
+  - inline (grey) completion is accepted with Alt+Enter instead of Tab
+  Needs `set idealookupkeys+=<S-Tab>` in ~/.ideavimrc (see ide/jetbrains/.ideavimrc).
+-->
+<keymap version="1" name="IdeaVim GNOME" parent="Default for GNOME">
+  <action id="EditorChooseLookupItemReplace" />
+  <action id="EditorLookupSelectionDown">
+    <keyboard-shortcut first-keystroke="tab" />
+  </action>
+  <action id="EditorLookupSelectionUp">
+    <keyboard-shortcut first-keystroke="shift tab" />
+  </action>
+  <action id="InsertInlineCompletionAction">
+    <keyboard-shortcut first-keystroke="alt enter" />
+  </action>
+</keymap>

@@ -5,18 +5,26 @@
 " |____/|_| |_|
 
 " =================================================
-" Plugin 
+" Plugin
+" need IdeaVimExtension (marketplace)
+" need AceJump(Marketplace)
+" need ideavim-easymotion(Marketplace)
+" need Vim Peekaboo (Marketplace)
 set ideajoin
 set surround
 set easymotion
 set highlightedyank
 set NERDTree
-"set quickscope
-set peekaboo
+set quickscope
+set ReplaceWithRegister
+" keep normal-mode gr for ShowUsages (see LSP): the plugin skips its gr/grr
+" when its <Plug> maps are already mapped; visual gr still replaces the selection
+nmap <Plug>(RwrOff) <Plug>ReplaceWithRegisterOperator
+nmap <Plug>(RwrLineOff) <Plug>ReplaceWithRegisterLine
+"set peekaboo
 " =================================================
 " Common set "
 set showcmd
-set guicursor
 set number                        " line numbers
 set hlsearch                      " highlight search occurrences
 set ignorecase                    " ignore case in search pattejns
@@ -26,10 +34,11 @@ set wrapscan                      " searches wrap around the end of the file
 set gdefault                      " substitute all occurrences in line per default
 set history=10000                 " keep x lines of command line history
 set clipboard=unnamedplus,unnamed,ideaput " integrate with system clipboard
-set idearefactormode=normal
+set idearefactormode=keep         " keep current mode on refactor (or: select, visual)
 set ideastatusicon=gray
 set visualbell
 set timeoutlen=1000
+set keep-english-in-normal-and-restore-in-insert
 
 " set <leader> to <space>
 " leader
@@ -76,9 +85,9 @@ inoremap <C-f> :action Find<CR>
 map <Tab> :action NextTab<CR>
 map <S-Tab> :action PreviousTab<CR>
 
-" Tab suggestion
-inoremap <Tab> :action SelectNextCompletionOption<CR>
-inoremap <S-Tab> :action SelectPreviousCompletionOption<CR>
+" Tab suggestion: Tab/S-Tab are bound in the IDE keymap (Select Next/Previous
+" Completion Option); let the IDE get S-Tab too while the completion popup is open
+set idealookupkeys+=<S-Tab>
 
 " Navigate project errors
 map [d :action GotoPreviousError<CR>
