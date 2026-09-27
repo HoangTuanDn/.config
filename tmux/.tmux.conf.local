@@ -352,6 +352,10 @@ tmux_conf_battery_hbar_palette="heat"
 #tmux_conf_battery_hbar_palette="#d70000,#ff5f00,#5fff00"  # red, orange, green
 #tmux_conf_battery_hbar_palette="gradient(#00afff,#47a2ff,#7c91ff,#ac7afb,#d65be2,#e163df,#eb6cdd,#f475db,#ec9ff1,#eac3fe,#efe2ff,#ffffff)"
 
+# battery hbar symbols
+tmux_conf_battery_hbar_symbols="▏ ▎ ▍ ▌ ▋ ▊ ▉ █"
+#tmux_conf_battery_hbar_symbols="    "           # (from Nerd Fonts)
+
 # battery vbar palette, possible values are:
 #   - gradient (default)
 #   - heat
@@ -360,6 +364,13 @@ tmux_conf_battery_hbar_palette="heat"
 tmux_conf_battery_vbar_palette="heat"
 #tmux_conf_battery_vbar_palette="#d70000,#ff5f00,#5fff00"  # red, orange, green
 #tmux_conf_battery_vbar_palette="gradient(#00afff,#47a2ff,#7c91ff,#ac7afb,#d65be2,#e163df,#eb6cdd,#f475db,#ec9ff1,#eac3fe,#efe2ff,#ffffff)"
+
+# battery vbar symbols
+tmux_conf_battery_vbar_symbols="▁ ▂ ▃ ▄ ▅ ▆ ▇ █"
+#tmux_conf_battery_vbar_symbols="󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹" # (from Nerd Fonts)
+
+# battery vbar symbols, when battery is charging (optional)
+#tmux_conf_battery_vbar_symbols_charging="󰢜 󰂆 󰂇 󰂈 󰢝 󰂉 󰢞 󰂊 󰂋 󰂅" # (from Nerd Fonts)
 
 # symbols used to indicate whether battery is charging or discharging
 #tmux_conf_battery_status_charging="↑"       # U+2191
