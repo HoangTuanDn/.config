@@ -74,31 +74,32 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(
   kubectl
   git
+  zsh-completions
   zsh-autosuggestions
   you-should-use
   zsh-syntax-highlighting
   web-search
-  fzf-tab
+#  fzf-tab
 )
 
 # fzf-tab configuration
 # disable sort when completing `git checkout`
-zstyle ':completion:*:git-checkout:*' sort false
+##zstyle ':completion:*:git-checkout:*' sort false
 # set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+##zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # preview directory's content with eza when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-zstyle ':fzf-tab:complete:cd:*' popup-pad 40 0
+##zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+##zstyle ':fzf-tab:complete:cd:*' popup-pad 40 0
 # don't use escape sequences here, fzf-tab will ignore them
-zstyle ':completion:*:descriptions' format '[%d]'
+##zstyle ':completion:*:descriptions' format '[%d]'
 # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
-zstyle ':completion:*' menu no
+##zstyle ':completion:*' menu no
 # use tmux popup for show complete
-zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+##zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 
 # zsh completion
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-
+autoload -U compinit && compinit
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -179,17 +180,18 @@ export LESS="-R"
 export LESSOPEN="| bat --color always --style plain %s"
 
 #------------set up fzf--------#
-# morhetz/gruvbox
+# Tokyo Night Storm colors, background follows the terminal (bg:-1)
+# alt-bg/gutter are tuned for the Ptyxis "Monokai Pro" background (#363537)
 export FZF_DEFAULT_OPTS="
-  --tmux center
-  --color='fg:#616161 fg+:#616161
-  bg:#ffffff bg+:#e9e9e9 alt-bg:#f1f1f1
-  hl:#719872 hl+:#719899
-  pointer:#e12672 marker:#e17899
-  header:#719872
-  spinner:#719899 info:#727100
-  prompt:#0099bd query:#616161
-  border:#e1e1e1'"
+  --layout=reverse --info=inline-right
+  --color='fg:#a9b1d6 fg+:#c0caf5
+  bg:-1 bg+:#2e3c64 alt-bg:#3c3b3d gutter:#363537
+  hl:#2ac3de hl+:#2ac3de
+  pointer:#ff007c marker:#9ece6a
+  header:#ff9e64
+  spinner:#ff007c info:#737aa2
+  prompt:#7aa2f7 query:#c0caf5
+  border:#565f89 separator:#414868 scrollbar:#565f89'"
 
 # Preview file content using bat (https://github.com/sharkdp/bat)
 export FZF_CTRL_T_OPTS="
@@ -201,7 +203,7 @@ export FZF_CTRL_T_OPTS="
 # CTRL-Y to copy the command into clipboard using pbcopy
 
 export FZF_CTRL_R_OPTS="
-  --preview 'echo {}' --preview-window up:3:hidden:wrap
+  --preview 'echo {}' --preview-window down:3:hidden:wrap
   --bind 'ctrl-/:toggle-preview'
   --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip -selection clipboard)+abort'"
 
@@ -229,3 +231,22 @@ bindkey "^O" chtfzf
 #-----
 export COREPACK_ENABLE_AUTO_PIN=0
 
+# jetbrain
+export PATH="$PATH:/home/tuannh/.local/share/JetBrains/Toolbox/scripts"
+
+# fnm
+FNM_PATH="/home/tuannh/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env --shell zsh)"
+fi
+
+# python uv
+. "$HOME/.local/bin/env"
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/tuannh/.local/bin:$PATH"
+
+# opencode
+export PATH=/home/tuannh/.opencode/bin:$PATH
