@@ -1,0 +1,30 @@
+// Mappings from ide/jetbrains/.ideavimrc whose keys VSCodeVim never receives,
+// so they cannot live in settings.json (vim.*KeyBindings)
+[
+    // Tab suggestion: Tab/S-Tab = Select Next/Previous Completion Option (ide/jetbrains/keymaps)
+    {
+        "key": "tab",
+        "command": "selectNextSuggestion",
+        "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Insert' && suggestWidgetVisible"
+    },
+    {
+        "key": "shift+tab",
+        "command": "selectPrevSuggestion",
+        "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Insert' && suggestWidgetVisible"
+    },
+
+    // nmap <S-Enter> O<Esc>
+    {
+        "key": "shift+enter",
+        "command": "vim.remap",
+        "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Normal'",
+        "args": { "after": ["O", "<Esc>"] }
+    },
+    // nmap <C-Enter> o<Esc>
+    {
+        "key": "ctrl+enter",
+        "command": "vim.remap",
+        "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Normal'",
+        "args": { "after": ["o", "<Esc>"] }
+    }
+]

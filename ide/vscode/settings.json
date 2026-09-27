@@ -1,0 +1,169 @@
+{
+    "workbench.iconTheme": "material-icon-theme",
+
+    // =================================================
+    // VSCodeVim, mirrors ide/jetbrains/.ideavimrc
+    // Keys VSCodeVim never receives (insert-mode <Tab>/<S-Tab>, <S-Enter>, <C-Enter>)
+    // are in ide/vscode/keybindings.json
+    // =================================================
+
+    // Plugin
+    "vim.surround": true,
+    "vim.easymotion": true,
+    "vim.highlightedyank.enable": true,
+    "vim.highlightedyank.duration": 500,
+    "vim.highlightedyank.color": "rgba(160, 160, 160, 0.61)",
+    "vim.highlightedyank.textColor": "rgba(0, 0, 0, 1)",
+    "vim.joinspaces": false, // ideajoin: J joins with a single space like the IDE
+    "vim.visualstar": true, // vnoremap * y/<C-R>"<CR>
+    "vim.replaceWithRegister": true, // normal-mode gr is ShowUsages below, so only visual gr replaces
+    // NERDTree (l = activate node, h = jump parent): VSCodeVim already binds h/j/k/l/o in the Explorer
+
+    // Common set
+    "vim.showcmd": true,
+    "vim.cursorStylePerMode.insert": "line", // guicursor
+    "vim.cursorStylePerMode.normal": "block",
+    "vim.cursorStylePerMode.replace": "underline",
+    "vim.cursorStylePerMode.visual": "block",
+    "vim.cursorStylePerMode.visualblock": "block",
+    "vim.cursorStylePerMode.visualline": "block",
+    "editor.lineNumbers": "on", // number
+    "vim.hlsearch": true,
+    "vim.ignorecase": true,
+    "vim.smartcase": true,
+    "vim.incsearch": true,
+    "vim.wrapscan": true,
+    "vim.gdefault": true,
+    "vim.history": 10000,
+    "vim.useSystemClipboard": true, // clipboard=unnamedplus
+    "vim.timeout": 1000, // timeoutlen
+    "vim.leader": "<space>",
+    // No VS Code equivalent: peekaboo, visualbell, idearefactormode, ideastatusicon, <leader>sw ($SearchWeb)
+
+    "vim.normalModeKeyBindingsNonRecursive": [
+        { "before": ["<space>"], "commands": [] }, // map <space> <nop>
+        { "before": ["<leader>", "v"], "after": [":", "v", "s", "p"] },
+        { "before": ["<leader>", "s"], "after": [":", "s", "p"] },
+        // noremap <Esc> :noh<CR>, keeping the default Esc (collapse cursors, close peek widgets)
+        { "before": ["<Esc>"], "after": ["<Esc>"], "commands": [":nohl"], "silent": true },
+
+        // window navigation
+        { "before": ["<leader>", "j"], "after": ["<C-w>", "j"] },
+        { "before": ["<leader>", "k"], "after": ["<C-w>", "k"] },
+        { "before": ["<leader>", "h"], "after": ["<C-w>", "h"] },
+        { "before": ["<leader>", "l"], "after": ["<C-w>", "l"] },
+
+        // Tab navigation
+        { "before": ["<Tab>"], "commands": ["workbench.action.nextEditorInGroup"] },
+        { "before": ["<S-Tab>"], "commands": ["workbench.action.previousEditorInGroup"] },
+
+        // Navigate project errors
+        { "before": ["[", "d"], "commands": ["editor.action.marker.prev"] },
+        { "before": ["]", "d"], "commands": ["editor.action.marker.next"] },
+        { "before": ["[", "e"], "commands": ["editor.action.marker.prev"] },
+        { "before": ["]", "e"], "commands": ["editor.action.marker.next"] },
+        { "before": ["<leader>", "c", "e"], "commands": ["editor.action.showHover"] },
+
+        // Bye bye
+        { "before": ["<leader>", "q"], "commands": ["workbench.action.closeActiveEditor"] },
+        { "before": ["<leader>", "w"], "commands": ["workbench.action.files.saveAll"] },
+        { "before": ["<leader>", "Q"], "commands": ["workbench.action.closeAllEditors"] },
+        { "before": ["<leader>", "H"], "commands": ["workbench.action.closeSidebar", "workbench.action.closePanel", "workbench.action.closeAuxiliaryBar"] },
+        { "before": ["<leader>", "b", "d"], "commands": ["workbench.action.closeActiveEditor"] },
+
+        // menu content
+        { "before": ["<leader>", "m"], "commands": ["editor.action.showContextMenu"] },
+        { "before": ["<leader>", "c", "a"], "commands": ["editor.action.quickFix"] },
+        { "before": ["<leader>", "e"], "commands": ["workbench.view.explorer"] },
+
+        // terminal
+        { "before": ["<leader>", "t", "t"], "commands": ["workbench.action.terminal.focus"] },
+        { "before": ["<leader>", "t", "c"], "commands": [{ "command": "workbench.action.terminal.newWithCwd", "args": { "cwd": "${fileDirname}" } }] },
+
+        // file
+        { "before": ["<leader>", "o", "f"], "commands": ["workbench.action.files.openFile"] },
+        { "before": ["<leader>", "y", "p", "a"], "commands": ["copyFilePath"] },
+        { "before": ["<leader>", "y", "p", "r"], "commands": ["copyRelativeFilePath"] },
+        { "before": ["<leader>", "r", "f"], "commands": ["workbench.action.quickOpen"] },
+        { "before": ["<leader>", "r", "l"], "commands": ["workbench.action.navigateToLastEditLocation"] }, // closest to RecentLocations
+        { "before": ["<leader>", "r", "p"], "commands": ["workbench.action.openRecent"] },
+        { "before": ["<leader>", "s", "h"], "commands": ["timeline.focus"] }, // local history of the active file
+        { "before": ["<leader>", "s", "f"], "commands": ["workbench.action.files.revealActiveFileInWindows"] },
+        { "before": ["<leader>", "s", "i"], "commands": ["workbench.files.action.showActiveFileInExplorer"] },
+        { "before": ["<leader>", "f", "p"], "commands": ["workbench.action.findInFiles"] },
+
+        // delete not save buffer
+        { "before": ["<leader>", "x"], "after": ["\"", "_", "x"] },
+        { "before": ["<leader>", "d"], "after": ["\"", "_", "d"] },
+
+        // LSP (gd is VSCodeVim's built-in go to definition, which keeps the <C-o> jumplist)
+        { "before": ["g", "p"], "commands": ["editor.action.peekDefinition"] },
+        { "before": ["g", "i"], "commands": ["editor.action.goToImplementation"] },
+        { "before": ["g", "D"], "commands": ["editor.action.goToTypeDefinition"] },
+        { "before": ["g", "r"], "commands": ["editor.action.goToReferences"] },
+        { "before": ["g", "f"], "commands": ["workbench.action.gotoSymbol"] },
+        { "before": ["K"], "commands": ["editor.action.showHover"] },
+        { "before": ["g", "q"], "commands": ["editor.action.showHover"] },
+        { "before": ["g", "h"], "commands": ["editor.action.quickFix"] },
+        { "before": ["<leader>", "g", "f"], "commands": ["workbench.action.quickOpen"] },
+
+        // refactor
+        { "before": ["<leader>", "r", "n"], "commands": ["editor.action.rename"] },
+        { "before": ["<leader>", "r", "e"], "commands": ["editor.action.refactor"] },
+        { "before": ["<leader>", "o", "i"], "commands": ["editor.action.organizeImports"] },
+        { "before": ["<leader>", "f", "c"], "commands": ["editor.action.formatDocument"] },
+
+        // line number (VSCodeVim saves the toggle to editor.lineNumbers in user settings)
+        { "before": ["<leader>", "n"], "commands": [":set nu!"] },
+        { "before": ["<leader>", "n", "r"], "commands": [":set rnu!"] },
+
+        // collapse
+        { "before": ["z", "c"], "commands": ["editor.toggleFold"] },
+        { "before": ["z", "a"], "commands": ["editor.foldAll"] },
+        { "before": ["z", "A"], "commands": ["editor.unfoldAll"] }
+    ],
+
+    "vim.visualModeKeyBindingsNonRecursive": [
+        { "before": ["<space>"], "commands": [] }, // map <space> <nop>
+        { "before": ["<Esc>"], "after": ["<Esc>"], "commands": [":nohl"], "silent": true },
+
+        // don't lose selection when indenting
+        { "before": ["<"], "after": ["<", "g", "v"] },
+        { "before": [">"], "after": [">", "g", "v"] },
+        { "before": ["="], "after": ["=", "g", "v"] },
+
+        // `map` also applies in visual mode
+        { "before": ["<Tab>"], "commands": ["workbench.action.nextEditorInGroup"] },
+        { "before": ["<S-Tab>"], "commands": ["workbench.action.previousEditorInGroup"] },
+        { "before": ["[", "d"], "commands": ["editor.action.marker.prev"] },
+        { "before": ["]", "d"], "commands": ["editor.action.marker.next"] },
+        { "before": ["[", "e"], "commands": ["editor.action.marker.prev"] },
+        { "before": ["]", "e"], "commands": ["editor.action.marker.next"] },
+        { "before": ["<leader>", "q"], "commands": ["workbench.action.closeActiveEditor"] },
+        { "before": ["<leader>", "Q"], "commands": ["workbench.action.closeAllEditors"] },
+        { "before": ["<leader>", "H"], "commands": ["workbench.action.closeSidebar", "workbench.action.closePanel", "workbench.action.closeAuxiliaryBar"] },
+
+        // Move selected lines and keep selection on these lines
+        { "before": ["J"], "commands": ["editor.action.moveLinesDownAction"] },
+        { "before": ["K"], "commands": ["editor.action.moveLinesUpAction"] },
+
+        // delete not save buffer
+        { "before": ["<leader>", "x"], "after": ["\"", "_", "x"] },
+        { "before": ["<leader>", "d"], "after": ["\"", "_", "d"] }
+    ],
+
+    // <C-f> (Find) is VS Code's own ctrl+f in insert mode; <Tab>/<S-Tab> are in keybindings.json
+    "vim.insertModeKeyBindingsNonRecursive": [
+        // insert mode navigation
+        { "before": ["<C-a>"], "after": ["<Esc>", "^", "i"] },
+        { "before": ["<C-e>"], "after": ["<Esc>", "$", "a"] },
+        { "before": ["<C-l>"], "after": ["<Right>"] },
+        { "before": ["<C-h>"], "after": ["<Left>"] },
+
+        // move line, stay in insert mode (<Esc>:m +1<CR>gi)
+        { "before": ["<C-j>"], "commands": ["editor.action.moveLinesDownAction"] },
+        { "before": ["<C-k>"], "commands": ["editor.action.moveLinesUpAction"] },
+
+        { "before": ["j", "k"], "after": ["<Esc>"] }
+    ]
+}
