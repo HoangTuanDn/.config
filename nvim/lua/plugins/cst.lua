@@ -1,105 +1,59 @@
-local overrides = require "custom.configs.overrides"
+-- plugins that NvChad does not ship
 
-local edit_events = {
-  "TextChanged",
-  "TextChangedI",
-  "BufEnter",
-  "BufWinEnter",
-  "BufLeave",
-  "InsertEnter",
-  "InsertChange",
-  "InsertLeave",
-  "BufNewFile",
-  "BufReadPre",
-  "BufRead",
-  "BufReadPost",
-  "FileReadPre",
-  "FileReadPost",
-}
-
---@type NvPluginSpec[]
+---@type NvPluginSpec[]
 local plugins = {
-
-  -- Override plugin definition options
-
-  {
-    "neovim/nvim-lspconfig",
-    event = edit_events, -- override to ensure lsp automatically on new/open file
-    dependencies = {
-      -- format & linting
-      {
-        "jose-elias-alvarez/null-ls.nvim",
-        config = function()
-          require "custom.configs.null-ls"
-        end,
-      },
-    },
-    config = function()
-      require "configs.lspconfig"
-    end, -- Override to setup mason-lspconfig
-  },
-
-  -- override plugin configs
-  {
-    "williamboman/mason.nvim",
-    opts = overrides.mason,
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = overrides.treesitter,
-  },
-
-  {
-    "nvim-tree/nvim-tree.lua",
-    opts = overrides.nvimtree,
-  },
-
-  {
-    "NvChad/nvim-colorizer.lua",
-    opts = overrides.colorizer,
-  },
-
-  ----------------------------------------------------------------
-  -- Install a plugin
+  -- "jk" / "jj" escape insert mode without delaying every typed "j"
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
-    config = function()
-      require("better_escape").setup()
-    end,
+    opts = {},
   },
 
+  -- Pocco81/auto-save.nvim is unmaintained, okuuva/auto-save.nvim is its maintained fork
   {
-    "Pocco81/auto-save.nvim",
-    cmd = { "ASToggle" },
-    -- lazy = false,
-    event = edit_events,
-    config = function()
-      require("auto-save").setup()
-    end,
+    "okuuva/auto-save.nvim",
+    version = "^1.0.0",
+    cmd = "ASToggle",
+    event = { "InsertLeave", "TextChanged" },
+    opts = {
+      -- only real files: writing an oil buffer would apply its pending renames/deletes
+      condition = function(buf)
+        return vim.bo[buf].buftype == ""
+      end,
+    },
   },
 
+  -- codota/tabnine-nvim is archived (no more updates)
+  -- not loaded on startup, any :Tabnine* command loads it
   {
     "codota/tabnine-nvim",
-    -- event = edit_events,
-    -- lazy = false,
-    config = function()
-      require("tabnine").setup {
-        disable_auto_comment = true,
-        accept_keymap = "<M-Tab>",
-        dismiss_keymap = "<M-Esc>",
-        debounce_ms = 800,
-        suggestion_color = { gui = "#808080", cterm = 244 },
-        exclude_filetypes = { "TelescopePrompt" },
-        log_file_path = nil, -- absolute path to Tabnine log file
-      }
-    end,
     build = "./dl_binaries.sh",
+    cmd = { "TabnineStatus", "TabnineEnable", "TabnineLogin", "TabnineChat" },
+    main = "tabnine",
+    opts = {
+      disable_auto_comment = true,
+      accept_keymap = "<M-Tab>",
+      dismiss_keymap = "<M-Esc>",
+      debounce_ms = 800,
+      suggestion_color = { gui = "#808080", cterm = 244 },
+      exclude_filetypes = { "TelescopePrompt" },
+      log_file_path = nil, -- absolute path to Tabnine log file
+    },
   },
 
   {
     "stevearc/oil.nvim",
+    cmd = "Oil",
+    keys = {
+      {
+        "-",
+        function()
+          require("oil").open_float()
+        end,
+        desc = "Open Oil (press '-' again for parent dir)",
+      },
+    },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       default_file_explorer = false,
       view_options = {
@@ -111,49 +65,43 @@ local plugins = {
         max_height = 80,
       },
     },
-    init = function()
-      vim.keymap.set("n", "-", require("oil").open_float, { desc = "Open Oil (press '-' again for parent dir)" })
-    end,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function(this)
-      require("oil").setup(this.opts)
-    end,
   },
+
   -- visual multi
   {
     "mg979/vim-visual-multi",
-    event = edit_events,
+    event = "VeryLazy",
     init = function()
-      vim.cmd "let g:VM_maps = {}"
-      vim.cmd "let g:VM_maps['Find Under'] = '<C-l>'"
-      vim.cmd "let g:VM_maps['Find Subword Under'] = '<C-l>'"
-    end,
-  },
-  -- live server
-  {
-    "barrett-ruth/live-server.nvim",
-    build = "npm i -g live-server",
-    ft = { "html", "css", "javascript" },
-    init = function()
-      vim.keymap.set("n", "=", ":LiveServerStart<CR>", { desc = "Start Live Server" })
-      vim.keymap.set("n", "<C-=>", ":LiveServerStop<CR>", { desc = "Stop Live Server" })
-    end,
-    config = function()
-      require("live-server").setup()
+      vim.g.VM_maps = {
+        ["Find Under"] = "<C-l>",
+        ["Find Subword Under"] = "<C-l>",
+      }
     end,
   },
 
-  -- dap 
+  -- live server, now pure lua: the npm live-server package is no longer needed
+  -- its GitHub repo (barrett-ruth/live-server.nvim) is removed on 2026-10-31, it moved to Forgejo
   {
-    "mfussenegger/nvim-dap",
-    config = function()
-      require("core.utils").load_mappings "dap"
+    url = "https://forge.barrettruth.com/barrettruth/live-server.nvim",
+    cmd = { "LiveServerStart", "LiveServerStop", "LiveServerToggle" },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "html", "css", "javascript" },
+        callback = function(args)
+          vim.keymap.set("n", "=", "<cmd>LiveServerStart<CR>", { buffer = args.buf, desc = "Start Live Server" })
+          vim.keymap.set("n", "<C-=>", "<cmd>LiveServerStop<CR>", { buffer = args.buf, desc = "Stop Live Server" })
+        end,
+      })
     end,
   },
+
+  -- dap
   {
-    "rcarriga/nvim-dap-ui",
+    "mfussenegger/nvim-dap",
+    cmd = { "DapToggleBreakpoint", "DapContinue", "DapNew" },
     dependencies = {
-      "mfussenegger/nvim-dap",
+      "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio",
     },
     config = function()
       local dap = require "dap"
@@ -170,25 +118,76 @@ local plugins = {
       end
     end,
   },
+
   -- surround
   {
     "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    version = "^4.0.0", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
-    config = function()
-        require("nvim-surround").setup({
-            -- Configuration here, or leave empty to use defaults
-        })
-    end
+    opts = {},
   },
-  -- preview documentation
+
+  -- preview documentation (mappings are in lua/mappings.lua)
   {
-    'rmagatti/goto-preview',
-    opt = overrides.gotoPreview,
-    config = function(this)
-      require('goto-preview').setup {this.opt}
-    end
-  }
+    "rmagatti/goto-preview",
+    dependencies = { "rmagatti/logger.nvim" },
+    opts = function()
+      return {
+        width = 120, -- Width of the floating window
+        height = 15, -- Height of the floating window
+        border = { "↖", "─", "┐", "│", "┘", "─", "└", "│" }, -- Border characters of the floating window
+        default_mappings = false, -- Bind default mappings
+        debug = false, -- Print debug information
+        opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
+        resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
+        post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+        post_close_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+        references = { -- Configure the telescope UI for slowing the references cycling window.
+          provider = "telescope",
+          telescope = require("telescope.themes").get_dropdown { hide_preview = false },
+        },
+        -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
+        focus_on_open = true, -- Focus the floating window when opening it.
+        dismiss_on_move = false, -- Dismiss the floating window when moving the cursor.
+        force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
+        bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
+        stack_floating_preview_windows = true, -- Whether to nest floating windows
+        preview_window_title = { enable = true, position = "left" }, -- Whether to set the preview window title as the filename
+      }
+    end,
+  },
+
+  -- colorizer: NvChad/nvim-colorizer.lua moved to catgoose/nvim-colorizer.lua
+  {
+    "catgoose/nvim-colorizer.lua",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      options = {
+        parsers = {
+          css = true, -- Enable all CSS features: names, hex, rgb(), hsl(), oklch(), var()
+          css_fn = true, -- Enable all CSS *functions*: rgb(), hsl(), oklch()
+          names = { enable = true }, -- "Name" codes like Blue or blue
+          hex = {
+            rgb = true, -- #RGB hex codes
+            rrggbb = true, -- #RRGGBB hex codes
+            rrggbbaa = true, -- #RRGGBBAA hex codes
+            aarrggbb = true, -- 0xAARRGGBB hex codes
+          },
+          rgb = { enable = true }, -- CSS rgb() and rgba() functions
+          hsl = { enable = true }, -- CSS hsl() and hsla() functions
+          tailwind = { enable = true }, -- Enable tailwind colors
+          sass = { enable = true, parsers = { css = true } }, -- Enable sass colors
+        },
+        display = {
+          mode = "background", -- background / foreground / underline / virtualtext
+          virtualtext = { char = "■" },
+        },
+        -- update color values even if buffer is not focused
+        -- example use: cmp_menu, cmp_docs
+        always_update = true,
+      },
+    },
+  },
 }
 
 return plugins

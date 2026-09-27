@@ -1,38 +1,34 @@
--- EXAMPLE 
-local on_attach = require("nvchad.configs.lspconfig").on_attach
-local on_init = require("nvchad.configs.lspconfig").on_init
-local capabilities = require("nvchad.configs.lspconfig").capabilities
+-- https://nvchad.com/docs/config/lsp
+-- sets NvChad's capabilities/on_init for every server ("*"), LspAttach mappings and enables lua_ls
+require("nvchad.configs.lspconfig").defaults()
 
-local lspconfig = require "lspconfig"
 local servers = {
-   "html", 
-   "cssls", 
-   "tsserver", 
-   "clangd", 
-   "jsonls",
-   "dockerls",
-   "docker_compose_language_service",
-   "nginx_language_server",
-   "tailwindcss",
-   "textlsp",
-   "jdtls",
-   "yamlls",
-   "rust_analyzer",
-   "bashls",
-  }
-
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
-    on_init = on_init,
-    capabilities = capabilities,
-  }
-end
-
--- typescript
-lspconfig.tsserver.setup {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
+  "html",
+  "cssls",
+  "ts_ls", -- "tsserver" was renamed to "ts_ls" in nvim-lspconfig
+  "clangd",
+  "jsonls",
+  "dockerls",
+  "docker_compose_language_service",
+  "nginx_language_server",
+  "tailwindcss",
+  "harper_ls", -- grammar checker, replaces textlsp (doesn't build on python 3.14) and grammarly (deprecated)
+  "jdtls",
+  "yamlls",
+  "rust_analyzer",
+  "bashls",
+  "pyright",
 }
+
+-- check prose only, not the comments of every programming language
+vim.lsp.config("harper_ls", {
+  filetypes = { "markdown", "text", "tex", "gitcommit" },
+})
+
+-- servers whose binary is not installed are skipped, run :MasonInstallAll to install them
+vim.lsp.enable(servers)
+
+-- read :h vim.lsp.config for changing options of lsp servers, e.g.
+-- vim.lsp.config("pyright", {
+--   settings = { python = { analysis = { typeCheckingMode = "strict" } } },
+-- })
