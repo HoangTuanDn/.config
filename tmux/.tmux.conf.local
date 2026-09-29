@@ -406,6 +406,10 @@ tmux_conf_urlscan_options="--compact --dedupe"
 # increase history size
 set -g history-limit 10000
 
+# don't scroll the screen into history when it is cleared from the top-left corner:
+# with the prompt on the first row, fzf (Ctrl+R) and zle redraws leaked into the scrollback
+set -g scroll-on-clear off
+
 # start with mouse mode enabled
 #set -g mouse on
 
