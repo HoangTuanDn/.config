@@ -188,3 +188,9 @@ vnoremap * y/<C-R>"<CR>
 let g:highlightedyank_highlight_duration = "500"
 let g:highlightedyank_highlight_color = "rgba(160, 160, 160, 155)"
 let g:highlightedyank_highlight_foreground_color = "rgba(0, 0, 0, 255)"
+
+" quickscope
+"let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+"let g:qs_primary_color = '#ff0000'
+"let g:qs_secondary_color = '#ff00ff'
+let g:qs_disable_for_diffs = 1
