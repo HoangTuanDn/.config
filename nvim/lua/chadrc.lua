@@ -65,6 +65,16 @@ M.colorify = { enabled = false }
 M.mason = {
   pkgs = {
     "tree-sitter-cli", -- needed by nvim-treesitter (main branch) to build parsers
+    "docker-language-server", -- not in NvChad's lsp -> mason name table yet
+    -- go: linter used by golangci_lint_ls, debugger, gopher.nvim tools
+    "golangci-lint",
+    "delve",
+    "gomodifytags",
+    "impl",
+    "gotests",
+    "iferr",
+    -- php: xdebug adapter for nvim-dap
+    "php-debug-adapter",
   },
   -- needs python < 3.14, install it outside mason if you need nginx lsp
   skip = { "nginx-language-server" },

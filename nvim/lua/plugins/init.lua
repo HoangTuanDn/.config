@@ -1,5 +1,9 @@
 -- overrides of the plugins that NvChad already ships (lua/nvchad/plugins/init.lua)
 return {
+  -- completion: blink.cmp instead of nvim-cmp (NvChad's own blink setup, disables nvim-cmp)
+  -- nvim-cmp's docs window calls vim.lsp.util.stylize_markdown, deprecated in nvim 0.13 and removed in 0.14
+  { import = "nvchad.blink.lazyspec" },
+
   {
     "stevearc/conform.nvim",
     event = "BufWritePre", -- format on save
@@ -60,6 +64,14 @@ return {
         "dockerfile",
         "sql",
         "bash",
+        "php",
+        "php_only",
+        "phpdoc",
+        "blade",
+        "go",
+        "gomod",
+        "gosum",
+        "gowork",
       },
     },
   },

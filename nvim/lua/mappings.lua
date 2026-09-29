@@ -19,6 +19,28 @@ map("v", "<A-l>", "Vy0P", { desc = "Duplicate block" })
 
 -- dap
 map("n", "<leader>db", "<cmd>DapToggleBreakpoint<CR>", { desc = "Dap toggle breakpoint" })
+map("n", "<leader>dc", function()
+  require("dap").continue()
+end, { desc = "Dap start / continue" })
+map("n", "<leader>do", function()
+  require("dap").step_over()
+end, { desc = "Dap step over" })
+map("n", "<leader>di", function()
+  require("dap").step_into()
+end, { desc = "Dap step into" })
+map("n", "<leader>dO", function()
+  require("dap").step_out()
+end, { desc = "Dap step out" })
+map("n", "<leader>dq", function()
+  require("dap").terminate()
+end, { desc = "Dap stop" })
+map("n", "<leader>du", function()
+  require "dap" -- loads nvim-dap, its config sets up dap-ui
+  require("dapui").toggle()
+end, { desc = "Dap toggle ui" })
+map("n", "<leader>dt", function()
+  require("dap-go").debug_test()
+end, { desc = "Dap debug go test under cursor" })
 
 -- goto preview
 map("n", "gpd", function()

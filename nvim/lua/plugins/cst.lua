@@ -116,6 +116,12 @@ local plugins = {
       dap.listeners.before.event_exited["dapui_config"] = function()
         dapui.close()
       end
+
+      -- php: needs the xdebug extension (xdebug.mode=debug, xdebug.start_with_request=yes), go: nvim-dap-go
+      dap.adapters.php = { type = "executable", command = "php-debug-adapter" }
+      dap.configurations.php = {
+        { type = "php", request = "launch", name = "Listen for Xdebug", port = 9003 },
+      }
     end,
   },
 
