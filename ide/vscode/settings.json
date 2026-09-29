@@ -1,5 +1,8 @@
 {
     "workbench.iconTheme": "material-icon-theme",
+    "editor.unicodeHighlight.includeComments": false,
+    "workbench.colorTheme": "Dark Modern",
+    "explorer.confirmDelete": false,
 
     // =================================================
     // VSCodeVim, mirrors ide/jetbrains/.ideavimrc
@@ -17,7 +20,8 @@
     "vim.joinspaces": false, // ideajoin: J joins with a single space like the IDE
     "vim.visualstar": true, // vnoremap * y/<C-R>"<CR>
     "vim.replaceWithRegister": true, // normal-mode gr is ShowUsages below, so only visual gr replaces
-    // NERDTree (l = activate node, h = jump parent): VSCodeVim already binds h/j/k/l/o in the Explorer
+    // Explorer tree: VSCodeVim binds j/k/l/gg/G; nvim-tree style h, o, /, <BS>, W, a, r, x, c, p,
+    // d (trash), Y, gy, R, q and g? are in ide/vscode/keybindings.json (context menu: Shift+F10)
 
     // Common set
     "vim.showcmd": true,
@@ -37,7 +41,14 @@
     "vim.history": 10000,
     "vim.useSystemClipboard": true, // clipboard=unnamedplus
     "vim.timeout": 1000, // timeoutlen
+    // keep-english-in-normal-and-restore-in-insert (fcitx5): keyboard-us in normal mode, the last IM back in insert
+    "vim.autoSwitchInputMethod.enable": true,
+    "vim.autoSwitchInputMethod.defaultIM": "keyboard-us",
+    "vim.autoSwitchInputMethod.obtainIMCmd": "/usr/bin/fcitx5-remote -n",
+    "vim.autoSwitchInputMethod.switchIMCmd": "/usr/bin/fcitx5-remote -s {im}",
     "vim.leader": "<space>",
+    // Ctrl+P stays VS Code's Go to File in the editor; the other entries are VSCodeVim's defaults
+    "vim.handleKeys": { "<C-d>": true, "<C-s>": false, "<C-z>": false, "<C-p>": false },
     // No VS Code equivalent: peekaboo, visualbell, idearefactormode, ideastatusicon, <leader>sw ($SearchWeb)
 
     "vim.normalModeKeyBindingsNonRecursive": [
@@ -165,5 +176,7 @@
         { "before": ["<C-k>"], "commands": ["editor.action.moveLinesUpAction"] },
 
         { "before": ["j", "k"], "after": ["<Esc>"] }
-    ]
+    ],
+    "terminal.integrated.fontFamily": "JetBrainsMonoNL Nerd Font",
+    "window.density.layout": "compact"
 }

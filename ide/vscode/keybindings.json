@@ -26,5 +26,114 @@
         "command": "vim.remap",
         "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Normal'",
         "args": { "after": ["o", "<Esc>"] }
+    },
+
+    // Open Recent on Shift+Alt+R instead of Ctrl+R
+    {
+        "key": "shift+alt+r",
+        "command": "workbench.action.openRecent"
+    },
+    {
+        "key": "ctrl+r",
+        "command": "-workbench.action.openRecent"
+    },
+
+    // =================================================
+    // nvim-tree (NvChad) style keys in the Explorer. The context menu is Shift+F10 or
+    // the Menu key: a keybinding cannot open it, so m is left alone.
+    // =================================================
+
+    // Tree navigation (h: parent; VSCodeVim already binds j, k, l, gg, G)
+    {
+        "key": "h",
+        "command": "list.focusParent",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus"
+    },
+    // o: open the file or toggle the folder
+    {
+        "key": "o",
+        "command": "list.select",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus"
+    },
+    // /: find (VSCodeVim's / now only starts type-to-navigate)
+    {
+        "key": "/",
+        "command": "list.find",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus"
+    },
+    // <BS>: close the parent folder
+    {
+        "key": "backspace",
+        "command": "runCommands",
+        "args": { "commands": ["list.focusParent", "list.collapse"] },
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus"
+    },
+    // W: collapse all
+    {
+        "key": "shift+w",
+        "command": "workbench.files.action.collapseExplorerFolders",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus"
+    },
+    // File operations (a: new file; end the name with / for a folder)
+    {
+        "key": "a",
+        "command": "explorer.newFile",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus && !explorerResourceReadonly"
+    },
+    {
+        "key": "r",
+        "command": "renameFile",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus && !explorerResourceIsRoot && !explorerResourceReadonly"
+    },
+    {
+        "key": "x",
+        "command": "filesExplorer.cut",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus && !explorerResourceIsRoot && !explorerResourceReadonly"
+    },
+    {
+        "key": "c",
+        "command": "filesExplorer.copy",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus && !explorerResourceIsRoot"
+    },
+    {
+        "key": "p",
+        "command": "filesExplorer.paste",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus && !explorerResourceReadonly"
+    },
+    // d: move to the trash. No key deletes permanently: with "explorer.confirmDelete": false
+    // VS Code skips the prompt for permanent deletes too
+    {
+        "key": "d",
+        "command": "moveFileToTrash",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus && explorerResourceMoveableToTrash && !explorerResourceIsRoot && !explorerResourceReadonly"
+    },
+    // Y / gy: copy the relative / absolute path
+    {
+        "key": "shift+y",
+        "command": "copyRelativeFilePath",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus"
+    },
+    {
+        "key": "g y",
+        "command": "copyFilePath",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus"
+    },
+    // R: refresh
+    {
+        "key": "shift+r",
+        "command": "workbench.files.action.refreshFilesExplorer",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus"
+    },
+    // q: close the tree; g?: list these bindings
+    {
+        "key": "q",
+        "command": "workbench.action.closeSidebar",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus"
+    },
+    {
+        "key": "g shift+/",
+        "command": "workbench.action.openGlobalKeybindings",
+        "args": "@source:user filesExplorerFocus",
+        "when": "filesExplorerFocus && foldersViewVisible && !inputFocus"
     }
 ]
