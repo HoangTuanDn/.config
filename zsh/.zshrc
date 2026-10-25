@@ -155,11 +155,17 @@ dev=/home/tuannh/Data/code/dev
 # oh my posh
 eval "$(oh-my-posh init zsh --config ~/.poshthemes/tokyonight_storm1.omp.json)"
 
+# kubecolor
+alias kubectl=kubecolor
+
 # kubectl autocompletion
 source <(kubectl completion zsh)
 
 # helm autocompletion
 source <(helm completion zsh)
+
+# Make "kubecolor" borrow the same completion logic as "kubectl"
+compdef kubecolor=kubectl
 
 # enable support apt command not found
 source /etc/zsh_command_not_found
@@ -252,3 +258,16 @@ export PATH="/home/tuannh/.local/bin:$PATH"
 
 # opencode
 export PATH=/home/tuannh/.opencode/bin:$PATH
+
+# kubectl krew
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+# bun completions
+[ -s "/home/tuannh/.bun/_bun" ] && source "/home/tuannh/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# added by dbx installer
+export PATH="$HOME/.dbx/bin:$PATH"
